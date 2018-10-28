@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  db:
+    image: mysql
+    ports:
+    - "3306:3306"
+    volumes:
+    - ${PWD}/initial-data:/docker-entrypoint-initdb.d/
+    environment:
+    - MYSQL_ROOT_PASSWORD=supersecret
+    - MYSQL_DATABASE=fjviera
+    networks:
+    - backend
+  appplication:
+    depends_on:
+    - db
+    image: alpine
+    ports:
+    - "1323:1323"
+    volumes:
+    - $GOBIN/:/app
+    command:
+    - /app/command
+    networks:
+    - backend
+networks:
+  backend:
+    driver: "bridge"

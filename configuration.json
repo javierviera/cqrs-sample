@@ -1,0 +1,8 @@
+{
+  "engine": "mysql",
+  "server": "db",
+  "port": "3306",
+  "user": "products",
+  "password": "products",
+  "database": "fjviera"
+}

@@ -1,0 +1,24 @@
+version: '2'
+
+tasks:
+  build:
+    desc: Build the go binaries.
+    cmds:
+    - env GO111MODULE=on GOOS=linux GOARCH=arm go build -o command cmd/command/main.go
+    - mv command $GOBIN
+    - cp configuration.json $GOBIN
+  run-local:
+    desc: Run the go binaries.
+    cmds:
+    - export GO111MODULE=on
+    - go run cmd/command/main.go
+  run-docker-compose:
+    desc: Run application and database with intital data
+    deps: [build]
+    cmds:
+    - docker-compose up
+  component-databases-stop:
+    desc: Stop component database.
+    cmds:
+    - docker stop mysql
+    - docker rm mysql
